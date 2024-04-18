@@ -3,6 +3,7 @@ import cors from "cors";
 import { MongoClient, ObjectId, Collection } from "mongodb";
 import { config } from "./config";
 import { ChatVertexAI } from "@langchain/google-vertexai";
+import { BaseLanguageModelInput } from "@langchain/core/language_models/base";
 
 interface Message {
   _id: ObjectId;
@@ -22,9 +23,10 @@ router.use(express.json());
 
 const model = new ChatVertexAI({
   model: "gemini-1.0-pro",
-  maxOutputTokens: 2048,
+  maxOutputTokens: 2048, 
 });
 
+const history: BaseLanguageModelInput = [];
 router.post("/messages", async (req, res) => {
   const message = req.body.text;
 
@@ -33,16 +35,34 @@ router.post("/messages", async (req, res) => {
   }
 
   try {
-    const modelResponse = await model.invoke([
-      [
-        "human",
-        message
-      ],
+    history.push([
+      "human",
+      message
     ]);
+  
+    const modelResponse = await model.invoke(history, {
+     temperature: 0.5,
+     topP: 0.9,
+     topK: 20,
+    });
 
-    return res.send({ text: modelResponse?.content });
+    const textResponse = modelResponse?.content;
+
+    if (!textResponse) {
+      history.pop(); // remove the last message if the model did not return a response
+      return res.status(500).send({ error: 'Model invocation failed' });
+    }
+
+    history.push([
+      "assistant",
+      textResponse
+    ])
+
+    return res.send({ text: textResponse });
   } catch (e) {
     console.error(e);
+
+    history.pop(); // remove the last message if the model did not return a response
     return res.status(500).send({ error: 'Model invocation failed' });
   }
 
