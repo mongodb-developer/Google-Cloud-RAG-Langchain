@@ -1,16 +1,16 @@
 <section name="chat" class="chat-container">
     <div class="chat">
         <div class="conversation">
-            <div class="message">
-                <span class="content">Hello!</span>
+
+            <div class="message" *ngFor="let message of messages"
+                [ngClass]="{'human': message.type === 'human', 'bot': message.type === 'bot'}">
+                <span class="content">{{ message.text }}</span>
             </div>
-            <div class="message">
-                <span class="content">Hi there!</span>
-            </div>
+
         </div>
 
         <form class="input" [formGroup]="messageForm" (ngSubmit)="submitForm()">
-            <input type="text" placeholder="Type a message..." formControlName="text" label="text message" />
+            <textarea rows="5" type="text" placeholder="Type a message..." formControlName="text" label="text message"></textarea>
             <button class="send" type="submit" [disabled]="messageForm.invalid">Send</button>
         </form>
     </div>

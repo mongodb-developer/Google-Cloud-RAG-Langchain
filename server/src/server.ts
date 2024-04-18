@@ -2,10 +2,11 @@ import express from "express";
 import cors from "cors";
 import { MongoClient, ObjectId, Collection } from "mongodb";
 import { config } from "./config";
+import { ChatVertexAI } from "@langchain/google-vertexai";
 
 interface Message {
   _id: ObjectId;
-  message: string;
+  text: string;
   timestamp: Date;
 }
 
@@ -19,10 +20,32 @@ interface Context {
 const router = express.Router();
 router.use(express.json());
 
-router.post("/messages", (req, res) => {
+const model = new ChatVertexAI({
+  model: "gemini-1.0-pro",
+  maxOutputTokens: 2048,
+});
+
+router.post("/messages", async (req, res) => {
   const message = req.body.text;
-  console.log(message);
-  res.send({ message: "Hello, world!" });
+
+  if (!message) {
+    return res.status(400).send({ error: 'Message is required' });
+  }
+
+  try {
+    const modelResponse = await model.invoke([
+      [
+        "human",
+        message
+      ],
+    ]);
+
+    return res.send({ text: modelResponse?.content });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send({ error: 'Model invocation failed' });
+  }
+
 });
 
 connectToDatabase(config.mongodb.uri)
