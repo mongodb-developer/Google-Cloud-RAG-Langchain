@@ -2,19 +2,24 @@
   "name": "chatbot",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
   "scripts": {
+    "start": "ts-node src/server.ts",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stanimira Vlaeva <stanimira.vlaeva@mongodb.com>",
   "license": "Apache-2.0",
   "dependencies": {
     "@langchain/google-vertexai": "^0.0.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongodb": "^6.5.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   }
 }
