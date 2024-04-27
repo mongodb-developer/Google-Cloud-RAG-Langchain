@@ -2,6 +2,7 @@
   "name": "chatbot",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "scripts": {
     "start": "ts-node src/server.ts",
     "build": "tsc",
@@ -14,7 +15,9 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "mongodb": "^6.5.0"
+    "langchain": "^0.1.36",
+    "mongodb": "^6.5.0",
+    "pdf-parse": "^1.1.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
