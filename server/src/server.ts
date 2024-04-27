@@ -1,22 +1,9 @@
 import express from "express";
 import cors from "cors";
-import { MongoClient, ObjectId, Collection } from "mongodb";
 import { config } from "./config";
 import { ChatVertexAI } from "@langchain/google-vertexai";
 import { BaseLanguageModelInput } from "@langchain/core/language_models/base";
-
-interface Message {
-  _id: ObjectId;
-  text: string;
-  timestamp: Date;
-}
-
-interface Context {
-  _id: ObjectId;
-  textChunk: string;
-  vectorEmbedding: number[];
-  metadata: any;
-}
+import { connectToDatabase, collections } from "./database";
 
 const router = express.Router();
 router.use(express.json());
@@ -68,8 +55,8 @@ router.post("/messages", async (req, res) => {
 
 });
 
-connectToDatabase(config.mongodb.uri)
-  .then((collections) => {
+connectToDatabase()
+  .then(() => {
     const app = express();
     app.use(cors());
 
@@ -82,25 +69,4 @@ connectToDatabase(config.mongodb.uri)
   })
   .catch((error) => console.error(error));
 
-
-
-async function connectToDatabase(uri: string) {
-  const client = new MongoClient(uri);
-  await client.connect();
-
-  const db = client.db(config.mongodb.dbName);
-
-  const collections: {
-    messages?: Collection<Message>;
-    context?: Collection<Context>;
-  } = {};
-
-  const messagesCollection = db.collection<Message>(config.mongodb.messagesCollection);
-  collections.messages = messagesCollection;
-
-  const contextCollection = db.collection<Context>(config.mongodb.contextCollection);
-  collections.context = contextCollection;
-
-  return collections;
-}
 

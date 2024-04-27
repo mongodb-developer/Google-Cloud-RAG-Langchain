@@ -4,14 +4,17 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "start": "tsx src/server.ts",
+    "embed-documents": "tsx src/embed-documents.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stanimira Vlaeva <stanimira.vlaeva@mongodb.com>",
   "license": "Apache-2.0",
   "dependencies": {
+    "@langchain/community": "^0.0.53",
     "@langchain/google-vertexai": "^0.0.5",
+    "@langchain/mongodb": "^0.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
@@ -22,7 +25,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.7.3",
     "typescript": "^5.4.5"
   }
 }
