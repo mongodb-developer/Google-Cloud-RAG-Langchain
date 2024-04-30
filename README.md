@@ -1,4 +1,4 @@
-# RAG Chatbot Assistant with MongoDB Atlas, Google Cloud and Langchain
+# RAG Chat Assistant with MongoDB Atlas, Google Cloud and Langchain
 
 This is a demo of a chatbot assistant using retrieval augmented generation (RAG).
 
