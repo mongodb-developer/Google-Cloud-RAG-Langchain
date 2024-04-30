@@ -1,4 +1,4 @@
-FROM node:17-slim
+FROM node:20-slim
 WORKDIR /usr/app
 
 # Install dependencies and build the project.
