@@ -1,17 +1,36 @@
 <section name="chat" class="chat-container">
     <div class="chat">
-        <div class="conversation">
+    <h1>Insurance Assistant</h1>
+        <div class="conversation-container">
+            <div class="conversation">
 
-            <div class="message" *ngFor="let message of messages"
-                [ngClass]="{'human': message.type === 'human', 'bot': message.type === 'bot'}">
-                <span class="content">{{ message.text }}</span>
+                <div class="message" *ngFor="let message of messages"
+                    [ngClass]="{'human': message.type === 'human', 'bot': message.type === 'bot'}">
+                    
+                    <div *ngIf="message.type === 'human'; then humanAvatar else botAvatar">
+                        Here is never showing
+                    </div>
+
+                    <ng-template #humanAvatar>
+                        <img class="avatar" src="./assets/human-avatar.png" alt="Human Avatar" width="36px" height="36px" />
+                    </ng-template>
+
+                    <ng-template #botAvatar>
+                        <img class="avatar" src="./assets/bot-avatar.png" alt="Bot Avatar" width="36px" height="36px" />
+                    </ng-template>
+
+                    <markdown class="content" [data]="message.text"></markdown>
+                </div>
+
             </div>
-
         </div>
 
         <form class="input" [formGroup]="messageForm" (ngSubmit)="submitForm()">
-            <textarea rows="5" type="text" placeholder="Type a message..." formControlName="text" label="text message"></textarea>
-            <button class="send" type="submit" [disabled]="messageForm.invalid">Send</button>
+            <mat-form-field class="question-field">
+                <mat-label>Ask a question...</mat-label>
+                <input matInput placeholder="Ex. What's my insurance coverage?" formControlName="text">
+            </mat-form-field>
+            <button mat-button class="send" type="submit" [disabled]="messageForm.invalid">Send</button>
         </form>
     </div>
 </section>
