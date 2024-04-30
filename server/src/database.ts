@@ -1,5 +1,6 @@
 import { MongoClient, Collection } from "mongodb";
-import { config } from "./config";
+
+import { config } from "./config.js";
 
 interface Context {
     textChunk: string;
