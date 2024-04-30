@@ -12,12 +12,10 @@ if (!ATLAS_URI) {
   process.exit(1);
 }
 
-
 export const config = {
     mongodb: {
         uri: ATLAS_URI,
         dbName: "chat-rag",
-        messagesCollection: "messages",
         contextCollection: "context",
     },
     server: {

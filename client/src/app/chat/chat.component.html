@@ -1,18 +1,24 @@
 <section name="chat" class="chat-container">
     <div class="chat">
-    <h1>Insurance Assistant</h1>
+        <h1 *ngIf="!messages.length">
+            <span>Insurance Assistant</span>
+            <br />
+            <span class="assistant-question">How can I help you today?</span>
+        </h1>
+
         <div class="conversation-container">
             <div class="conversation">
 
                 <div class="message" *ngFor="let message of messages"
                     [ngClass]="{'human': message.type === 'human', 'bot': message.type === 'bot'}">
-                    
+
                     <div *ngIf="message.type === 'human'; then humanAvatar else botAvatar">
                         Here is never showing
                     </div>
 
                     <ng-template #humanAvatar>
-                        <img class="avatar" src="./assets/human-avatar.png" alt="Human Avatar" width="36px" height="36px" />
+                        <img class="avatar" src="./assets/human-avatar.png" alt="Human Avatar" width="36px"
+                            height="36px" />
                     </ng-template>
 
                     <ng-template #botAvatar>
@@ -28,9 +34,12 @@
         <form class="input" [formGroup]="messageForm" (ngSubmit)="submitForm()">
             <mat-form-field class="question-field">
                 <mat-label>Ask a question...</mat-label>
-                <input matInput placeholder="Ex. What's my insurance coverage?" formControlName="text">
-            </mat-form-field>
-            <button mat-button class="send" type="submit" [disabled]="messageForm.invalid">Send</button>
+                <input autofocus matInput placeholder="Ex. What's my insurance coverage?" formControlName="text">
+           </mat-form-field>
+            <mat-button-toggle-group class="rag-toggle" formControlName="rag" aria-label="RAG">
+                <mat-button-toggle [value]="true">RAG</mat-button-toggle>
+                <mat-button-toggle [value]="false">No RAG</mat-button-toggle>
+            </mat-button-toggle-group>
         </form>
     </div>
 </section>

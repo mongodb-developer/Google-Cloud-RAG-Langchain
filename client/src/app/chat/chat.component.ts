@@ -3,13 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { config } from '../../config';
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MarkdownComponent, MarkdownPipe } from 'ngx-markdown';
 
 interface Message {
   text: string;
-  timestamp: string;
   type: "human" | "bot";
 }
 
@@ -24,6 +25,8 @@ interface Message {
     NgClass,
     MatInputModule,
     MatButtonModule,
+    MatCheckboxModule,
+    MatButtonToggleModule,
     MarkdownComponent,
     MarkdownPipe,
   ],
@@ -40,24 +43,23 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.messageForm = this.fb.group({
       text: [''],
+      rag: [false]
     });
   }
 
   submitForm(): void {
-    const text = this.messageForm.value.text;
+    const { text, rag } = this.messageForm.value;
 
     this.messages.push({
       text,
-      timestamp: new Date().toISOString(),
       type: "human"
     });
 
-    this.httpClient.post(`${config.backendUrl}/messages`, { text, rag: true })
+    this.httpClient.post(`${config.backendUrl}/messages`, { text, rag })
       .subscribe({
         next: (response: any) => {
           this.messages.push({
             text: response.text,
-            timestamp: new Date().toISOString(),
             type: "bot"
           });
         },
@@ -66,6 +68,8 @@ export class ChatComponent implements OnInit {
         }
       });
 
-      this.messageForm.reset();
+    this.messageForm.reset();
+    // Persist the value of the rag toggle
+    this.messageForm.patchValue({ rag });
   }
 }

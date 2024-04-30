@@ -1,4 +1,85 @@
-/* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@use '@angular/material' as mat;
+@include mat.core();
+
+/* Fonts */
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons+Outlined';
+
+@font-face {
+    font-family: 'MongoDB Value Serif Bold';
+    src: local('MongoDB Value Serif Bold'), url(assets/fonts/MongoDBValueSerif-Bold.woff2);
+}
+
+@font-face {
+    font-family: 'MongoDB Value Serif Medium';
+    src: local('MongoDB Value Serif Medium'), url(assets/fonts/MongoDBValueSerif-Medium.woff2);
+}
+
+@font-face {
+    font-family: 'MongoDB Value Serif';
+    src: local('MongoDB Value Serif'), url(assets/fonts/MongoDBValueSerif-Regular.woff2);
+}
+
+@font-face {
+    font-family: 'Euclid Circular A';
+    src: local('Euclid Circular A'), url(assets/fonts/EuclidCircularA-Regular-WebXL.woff2);
+}
+
+@font-face {
+    font-family: 'Euclid Circular A Medium';
+    src: local('Euclid Circular A Medium'), url(assets/fonts/EuclidCircularA-Medium-WebXL.woff2);
+}
+
+@font-face {
+    font-family: 'Source Code Pro';
+    src: local('Source Code Pro'), url(assets/fonts/SourceCodePro-Regular.ttf);
+}
+@font-face {
+    font-family: 'Source Code Pro Medium';
+    src: local('Source Code Pro Medium'), url(assets/fonts/SourceCodePro-Medium.ttf);
+}
+
+/* Typography */
+// Define the typography levels.
+$headline1: mat.define-typography-level(98px, 112px, 300);
+$headline2: mat.define-typography-level(61px, 56px, 300);
+$headline3: mat.define-typography-level(49px, 48px, 300);
+$headline4: mat.define-typography-level(35px, 40px, 300);
+$headline5: mat.define-typography-level(30px, 24px, 600, 'Euclid Circular A'); // H1
+$headline6: mat.define-typography-level(26px, 20px, 400, 'Euclid Circular A'); // H2
+$subtitle1: mat.define-typography-level(24px, 20px, 300, 'MongoDB Value Serif Bold'); // H3
+$subtitle2: mat.define-typography-level(18px, 20px, 300, 'MongoDB Value Serif Bold'); // H4
+$body1: mat.define-typography-level(16px, 24px, 300); // Base body text
+$body2: mat.define-typography-level(14px, 24px, 300);
+$caption: mat.define-typography-level(12px, 20px, 400);
+$button: mat.define-typography-level(14px, 14px, 500);
+
+$font-family: 'Euclid Circular A';
+
+// Define the typography config.
+$lms-typography: mat.define-typography-config(
+  $font-family: 'Euclid Circular A',
+  $headline-1: $headline1,
+  $headline-2: $headline2,
+  $headline-3: $headline3,
+  $headline-4: $headline4,
+  $headline-5: $headline5,
+  $headline-6: $headline6,
+  $body-1: $body1,
+  $body-2: $body2,
+  $subtitle-1: $subtitle1,
+  $subtitle-2: $subtitle2,
+  $button: $button,
+  $caption: $caption
+);
+
+html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    font-family: "Euclid Circular A", sans-serif;
+}

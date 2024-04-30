@@ -5,9 +5,18 @@
     margin: 30px;
     height: 90vh;
 
-    h1 {
-        margin: 30px;
+    h1, h2 {
+        font-family: "MongoDB Value Serif", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 64px;
+        line-height: 80px;
+        color: #001e2b;
         text-align: center;
+        
+        .assistant-question {
+            color: grey;
+        }
     }
 
     .chat {
@@ -28,6 +37,11 @@
 
         .question-field {
             width: 700px;
+        }
+
+        .rag-toggle {
+            margin-top: -22px;
+            margin-left: 20px;
         }
     }
 

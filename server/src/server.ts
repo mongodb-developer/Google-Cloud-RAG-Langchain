@@ -4,24 +4,27 @@ import { ChatVertexAI } from "@langchain/google-vertexai";
 import { BaseLanguageModelInput } from "@langchain/core/language_models/base";
 import { GoogleVertexAIEmbeddings } from "@langchain/community/embeddings/googlevertexai";
 import { MongoDBAtlasVectorSearch } from "@langchain/mongodb";
-import { pull } from "langchain/hub";
-import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 
 import { config } from "./config";
 import { connectToDatabase, collections } from "./database";
-import { BaseMessage } from "@langchain/core/messages";
 
 await connectToDatabase();
 
+// Initialize the conversational Vertex AI model
 const model = new ChatVertexAI({
+  // We will use the Gemini 1.0 Pro model
   model: "gemini-1.0-pro",
+  // The maximum number of tokens to generate in the response
   maxOutputTokens: 2048,
+  // The temperature parameter controls the randomness of the output — the higher the value, the more random the output
   temperature: 0.5,
+  // The topP parameter controls the diversity of the output — the higher the value, the more diverse the output
   topP: 0.9,
+  // The topK parameter controls the diversity of the output — the higher the value, the more diverse the output
   topK: 20,
 });
 
-// Instantiates a new MongoDBAtlasVectorSearch object with the specified configuration
+// Connect to the MongoDB Atlas vector store
 const vectorStore = new MongoDBAtlasVectorSearch(
   // Google Cloud Vertex AI's text embeddings model will be used for vectorizing the text chunks
   new GoogleVertexAIEmbeddings(),
@@ -39,12 +42,15 @@ const vectorStore = new MongoDBAtlasVectorSearch(
 // Initialize a retriever wrapper around the MongoDB Atlas vector store
 const vectorStoreRetriever = vectorStore.asRetriever();
 
-const rephrasePrompt = await pull("langchain-ai/chat-langchain-rephrase");
-const retriever = await createHistoryAwareRetriever({
-  llm: model,
-  retriever: vectorStoreRetriever,
-  rephrasePrompt: rephrasePrompt as any,
-});
+// Store chat history, starting with the system message that the assistant is a helpful insurance policies assistant
+const history: BaseLanguageModelInput = [
+  [
+    "system",
+    `You are a helpful insurance policies assistant. 
+    Don't make up responses, only provide accurate information. Don't respond to meaningless questions.
+    Use the context to provide accurate responses. Only provide information that is relevant to the user's question.`
+  ],
+];
 
 const app = express();
 app.use(cors());
@@ -52,48 +58,42 @@ app.use(cors());
 const router = express.Router();
 router.use(express.json());
 
-const history: BaseLanguageModelInput = [
-  ["system", "You are a helpful insurance policies assistant. Don't make up responses, only provide accurate information. Don't respond to meaninless questions."],
-];
-
 router.post("/messages", async (req, res) => {
   let message = req.body.text;
   if (!message) {
     return res.status(400).send({ error: 'Message is required' });
   }
 
-  message = `User question: ${message}.`;
+  let prompt = `User question: ${message}.`;
 
+  // If RAG is enabled, retrieve context from the MongoDB Atlas vector store
   const rag = req.body.rag;
   if (rag) {
-    const context = await retriever.invoke({
-      input: message,
-      chat_history: history as BaseMessage[],
-    });
-    if (!context) {
-      console.error("Retrieval of context failed");
-    }
+    const context = await vectorStoreRetriever.invoke(message);
 
-    message += `
+    if (context) {
+      prompt += `
 
       Context:
       ${context?.map(doc => doc.pageContent).join("\n")}
     `;
+    } else {
+      console.error("Retrieval of context failed");
+    }
   }
 
   try {
-    history.push([
-      "human",
-      message
-    ]);
-
-    const modelResponse = await model.invoke(history);
+    const modelResponse = await model.invoke([...history, prompt]);
     const textResponse = modelResponse?.content;
 
     if (!textResponse) {
-      history.pop(); // remove the last message if the model did not return a response
-      return res.status(500).send({ error: 'Model invocation failed' });
+      return res.status(500).send({ error: 'Model invocation failed.' });
     }
+
+    history.push([
+      "human",
+      message // Append only the user message to the history
+    ]);
 
     history.push([
       "assistant",
@@ -103,9 +103,7 @@ router.post("/messages", async (req, res) => {
     return res.send({ text: textResponse });
   } catch (e) {
     console.error(e);
-
-    history.pop(); // remove the last message if the model did not return a response
-    return res.status(500).send({ error: 'Model invocation failed' });
+    return res.status(500).send({ error: 'Model invocation failed.' });
   }
 });
 
