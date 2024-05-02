@@ -9,12 +9,11 @@
         <div class="conversation-container">
             <div class="conversation">
 
-                <div class="message" *ngFor="let message of messages"
+                <div class="message" *ngFor="let message of messages; let i = index"
+                    #message
                     [ngClass]="{'human': message.type === 'human', 'bot': message.type === 'bot'}">
 
-                    <div *ngIf="message.type === 'human'; then humanAvatar else botAvatar">
-                        Here is never showing
-                    </div>
+                    <div *ngIf="message.type === 'human'; then humanAvatar else botAvatar"></div>
 
                     <ng-template #humanAvatar>
                         <img class="avatar" src="./assets/human-avatar.png" alt="Human Avatar" width="36px"

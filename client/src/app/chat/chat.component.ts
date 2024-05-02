@@ -1,13 +1,15 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { config } from '../../config';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MarkdownComponent, MarkdownPipe } from 'ngx-markdown';
+
+import { config } from '../../config';
+import { inline } from 'marked';
 
 interface Message {
   text: string;
@@ -36,6 +38,9 @@ interface Message {
 export class ChatComponent implements OnInit {
   messageForm: FormGroup;
   messages: Message[] = [];
+  scrolled = false;
+
+  @ViewChildren('message') messageElements: any;
 
   constructor(private fb: FormBuilder, private httpClient: HttpClient) {
   }
@@ -45,6 +50,17 @@ export class ChatComponent implements OnInit {
       text: [''],
       rag: [false]
     });
+  }
+
+  ngAfterViewChecked(): void {
+    if (!this.scrolled) {
+      const element = this.messageElements?.last?.nativeElement;
+      element?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+      this.scrolled = true;
+    } else {
+      this.scrolled = false;
+    }
   }
 
   submitForm(): void {
@@ -65,6 +81,10 @@ export class ChatComponent implements OnInit {
         },
         error: (error: any) => {
           console.error(error);
+          this.messages.push({
+            text: "Sorry, I'm having trouble understanding you right now. Please try again later.",
+            type: "bot"
+          });
         }
       });
 
