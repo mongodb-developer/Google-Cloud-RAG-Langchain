@@ -13,7 +13,7 @@ RUN npm run build --prod
 # Configure the nginx web server
 FROM nginx:1.17.1-alpine
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /usr/src/app/dist/client /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist/chatbot /usr/share/nginx/html
 
 # Run the web service on container startup.
 CMD ["nginx", "-g", "daemon off;"]
