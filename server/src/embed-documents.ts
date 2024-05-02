@@ -3,7 +3,8 @@ import { DirectoryLoader } from "langchain/document_loaders/fs/directory";
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { GoogleVertexAIEmbeddings } from "@langchain/community/embeddings/googlevertexai";
-import { connectToDatabase } from "./database";
+
+import { connectToDatabase } from "./database.js";
 
 // Load all PDFs within the specified directory
 const directoryLoader = new DirectoryLoader(

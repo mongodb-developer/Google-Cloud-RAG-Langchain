@@ -96,6 +96,11 @@ Follow the steps below to set up the chat assistant for local development.
 
 1. Try asking the chatbot questions like "What is the coverage of my insurance policy?" or "What are the specifics of my car insurance?". Use the `RAG` toggle to switch between retrieval augmented generation and retrieval only.
 
+
+## Contributors
+
+This demo is inspired by the [Chat Application with RAG Feature Toggle and Backend Server](https://github.com/voxic/GCP_RAG_Chatbot/tree/main).
+
 ## Disclaimer
 
 Use at your own risk; not a supported MongoDB product

@@ -5,8 +5,8 @@ import { BaseLanguageModelInput } from "@langchain/core/language_models/base";
 import { GoogleVertexAIEmbeddings } from "@langchain/community/embeddings/googlevertexai";
 import { MongoDBAtlasVectorSearch } from "@langchain/mongodb";
 
-import { config } from "./config";
-import { connectToDatabase, collections } from "./database";
+import { config } from "./config.js";
+import { connectToDatabase, collections } from "./database.js";
 
 await connectToDatabase();
 
