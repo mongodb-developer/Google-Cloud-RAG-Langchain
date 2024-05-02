@@ -10,13 +10,15 @@ The client is built with Angular and Angular Material. The server is built with 
 
 1. [Node.js](https://nodejs.org/) LTS.
 
+1. Google Cloud account with Vertex AI APIs enabled.
+
 ## Setup
 
 Follow the steps below to set up the chat assistant for local development.
 
 ### MongoDB Atlas Vector Store Setup
 
-1. Create a MongoDB Atlas account and deploy a free database. Complete the quickstart guide — create a database user and allowlist your IP address.
+1. Create a [MongoDB Atlas](https://mongodb.com/try?utm_campaign=devrel&utm_source=cross-post&utm_medium=cta&utm_content=google-cloud-rag&utm_term=stanimira.vlaeva) account and deploy a free database. Complete the quickstart guide — create a database user and allowlist your IP address.
 
 1. Clone the repository.
 
@@ -97,9 +99,27 @@ Follow the steps below to set up the chat assistant for local development.
 1. Try asking the chatbot questions like "What is the coverage of my insurance policy?" or "What are the specifics of my car insurance?". Use the `RAG` toggle to switch between retrieval augmented generation and retrieval only.
 
 
-## Contributors
+## Contributors ✨
 
 This demo is inspired by the [Chat Application with RAG Feature Toggle and Backend Server](https://github.com/voxic/GCP_RAG_Chatbot/tree/main).
+
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center">
+        <a href="https://twitter.com/StanimiraVlaeva">
+            <img src="https://pbs.twimg.com/profile_images/1645826266770055168/SS9kFxoJ_400x400.jpg" width="100px;" alt=""/><br />
+            <sub><b>Stanimira Vlaeva</b></sub>
+        </a><br />
+    </td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+
 
 ## Disclaimer
 
