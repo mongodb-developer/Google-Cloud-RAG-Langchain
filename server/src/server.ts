@@ -58,6 +58,10 @@ app.use(cors());
 const router = express.Router();
 router.use(express.json());
 
+router.get("/", async (_, res) => {
+  res.send("Welcome to the Insurance Chatbot API! 🤖");
+});
+
 router.post("/messages", async (req, res) => {
   let message = req.body.text;
   if (!message) {

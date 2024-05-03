@@ -109,6 +109,23 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "chatbot:build:production",
+              "serveTarget": "chatbot:serve:production"
+            },
+            "development": {
+              "buildTarget": "chatbot:build:development",
+              "serveTarget": "chatbot:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

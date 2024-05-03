@@ -1,3 +1,3 @@
 export const config = {
-    backendUrl: 'http://localhost:8080',
+    backendUrl: 'https://chat-server-rk6lsye2yq-uc.a.run.app',
 };

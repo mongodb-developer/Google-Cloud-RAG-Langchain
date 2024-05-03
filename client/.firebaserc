@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "atlas-ai-demos": {
+      "hosting": {
+        "chatbot": [
+          "mdb-chatbot"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "atlas-ai-demos"
+  }
+}
