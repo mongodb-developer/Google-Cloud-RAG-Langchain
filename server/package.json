@@ -4,7 +4,8 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "tsx src/server.ts",
+    "start": "nodemon --config nodemon.json",
+    "start:tsx": "tsx src/server.ts",
     "embed-documents": "tsx src/embed-documents.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "nodemon": "^3.1.0",
     "tsx": "^4.7.3",
     "typescript": "^5.4.5"
   }
