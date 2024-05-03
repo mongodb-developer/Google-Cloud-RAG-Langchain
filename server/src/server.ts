@@ -116,5 +116,5 @@ app.use(router);
 
 // start the Express server
 app.listen(config.server.port, () => {
-  console.log(`Server running at http://localhost:${config.server.port}...`);
+  console.log(`Server running on port:${config.server.port}...`);
 });
