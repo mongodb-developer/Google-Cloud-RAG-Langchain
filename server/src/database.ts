@@ -13,13 +13,5 @@ export const collections: {
 } = {};
 
 export async function connectToDatabase(uri = config.mongodb.uri) {
-    const client = new MongoClient(uri);
-    await client.connect();
-
-    const db = client.db(config.mongodb.dbName);
-
-    const contextCollection = db.collection<Context>(config.mongodb.contextCollection);
-    collections.context = contextCollection;
-
-    return collections;
+    // TODO: Implement connect to MongoDB Atlas database
 }
