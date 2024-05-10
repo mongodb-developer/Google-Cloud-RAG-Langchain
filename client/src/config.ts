@@ -1,7 +1,9 @@
-const backendPort = '8080';
-const backendUrl = `${location.protocol}//${location.hostname.replace('4200', `${backendPort}`)}${location.port ? `:${backendPort}` : ""}`;
-
-console.log(backendUrl);
+let backendUrl;
+if (location.hostname.includes('cloudshell')) {
+  backendUrl = 'https://mongodb.loca.lt';
+} else {
+  backendUrl = 'http://localhost:8080';
+}
 
 export const config = {
     backendUrl

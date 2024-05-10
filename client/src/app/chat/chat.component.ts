@@ -75,7 +75,12 @@ export class ChatComponent implements OnInit {
         type: 'loading',
       });
 
-      this.httpClient.post(`${config.backendUrl}/messages`, { text, rag })
+      this.httpClient.post(`${config.backendUrl}/messages`,
+        { text, rag },
+        {
+          headers: { 'bypass-tunnel-reminder': 'true' }
+        }
+      )
         .subscribe({
           next: (response: any) => {
             this.messages.pop();
