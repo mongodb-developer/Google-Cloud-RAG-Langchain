@@ -12,8 +12,8 @@ await connectToDatabase();
 
 // Initialize the conversational Vertex AI model
 const model = new ChatVertexAI({
-  // We will use the Gemini 1.0 Pro model
-  model: "gemini-1.0-pro",
+  // We will use the Gemini 1.5 Pro model
+  model: "gemini-1.5-pro-001",
   // The maximum number of tokens to generate in the response
   maxOutputTokens: 2048,
   // The temperature parameter controls the randomness of the output — the higher the value, the more random the output
@@ -46,9 +46,9 @@ const vectorStoreRetriever = vectorStore.asRetriever();
 const history: BaseLanguageModelInput = [
   [
     "system",
-    `You are a helpful insurance policies assistant. 
-    Don't make up responses, only provide accurate information. Don't respond to meaningless questions.
-    Use the context to provide accurate responses. Only provide information that is relevant to the user's question.`
+`You are a knowledgeable and reliable insurance policies assistant. Provide only accurate and verified information related to insurance policies. Do not respond to irrelevant or nonsensical questions.
+
+Use any provided context about the user's insurance policies, such as coverage details, policy terms, and claim procedures, to ensure your responses are precise and pertinent. Do not mention that the context was used to generate the response. Include only information directly relevant to the user's inquiry.`
   ],
 ];
 
