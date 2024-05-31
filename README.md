@@ -24,32 +24,25 @@ Follow the steps below to set up the chat assistant for local development.
 
     ```
     git clone https://github.com/mongodb-developer/Google-Cloud-RAG-Langchain.git rag-chatbot
-    cd rag-chatbot/server
+    cd rag-chatbot
     ```
 
-1. Create a `.env` file in the `server` directory with the following content:
+1. Create a `.env` file with the following content:
 
     ```
     ATLAS_URI=<your-atlas-connection-string>
     ```
 
-1. Install the dependencies.
-
-    **rag-chatbot/server/**
-    ```
-    npm install
-    ```
-
 1. Run the embedding script to vectorize the PDF data and store it in MongoDB Atlas.
 
-    **rag-chatbot/server/**
+    **rag-chatbot/**
     ```
     npm run embed-documents
     ```
 
-1. Go back to MongoDB Atlas and verify that the data has been stored in the `chat-rag.context` collection.
+1. Go back to MongoDB Atlas and verify that the data has been stored in the `context` collection.
 
-1. Switch to the Atlas Search tab and click `Create Search Index`. Select `JSON Editor` in the **Atlas Vector Search** section.
+1. Switch to the Atlas Search tab and click `Create Search Index`. Select `JSON Editor` in the **Atlas Vector Search** section. This is the last option in the list.
 
 1. From the left sidebar, select the `chat-rag` database and the `context` collection.
 
@@ -70,28 +63,13 @@ Follow the steps below to set up the chat assistant for local development.
 
 1. Wait for the status to change to `Active`.
 
-### Server setup
+### Run the application
 
-1. Start the server.
+1. Start the application with the following command:
 
-    **rag-chatbot/server/**
+    **rag-chatbot/**
     ```
     npm start
-    ```
-
-### Client setup
-
-1. Open a new terminal emulator and navigate to the `client` directory.
-
-    ```
-    cd ../client
-    ```
-
-1. Install the dependencies and start the client.
-
-    **rag-chatbot/client/**
-    ```
-    npm install && npm start
     ```
 
 1. Open a browser and navigate to `http://localhost:4200`.
