@@ -1,5 +1,19 @@
 {
   "dependencies": {
+    "concurrently": "^8.2.2",
     "localtunnel": "^2.0.2"
+  },
+  "scripts": {
+    "embed-documents": "cd server && npm run embed-documents",
+    
+    "prestart": "concurrently \"npm:install-dependencies\" \"npm:install-dependencies:server\" \"npm:install-dependencies:client\"",
+    "install-dependencies": "npm i",
+    "install-dependencies:server": "cd server && npm i",
+    "install-dependencies:client": "cd client && npm i",
+
+    "start": "concurrently \"npm:start:localtunnel\" \"npm:start:server\" \"npm:start:client\"",
+    "start:localtunnel": "localtunnel --port 8080",
+    "start:server": "cd server && npm start",
+    "start:client": "cd client && npm start"
   }
 }
