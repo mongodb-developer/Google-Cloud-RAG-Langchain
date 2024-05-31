@@ -38,7 +38,7 @@
         <form class="input" [formGroup]="messageForm" (ngSubmit)="submitForm()">
             <mat-form-field class="question-field">
                 <mat-label>Ask a question...</mat-label>
-                <input autofocus matInput placeholder="Ex. What's my insurance coverage?" formControlName="text">
+                <input autofocus matInput placeholder="Ex. Does my car insurance cover mechanical damage?" formControlName="text">
            </mat-form-field>
             <mat-button-toggle-group class="rag-toggle" formControlName="rag" aria-label="RAG">
                 <mat-button-toggle [value]="true">RAG</mat-button-toggle>
