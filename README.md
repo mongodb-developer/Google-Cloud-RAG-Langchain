@@ -53,7 +53,7 @@ Follow the steps below to set up the chat assistant for local development.
 
 1. From the left sidebar, select the `chat-rag` database and the `context` collection.
 
-1. Rename the index to `default` and add the following JSON schema:
+1. Add the following JSON schema:
 
     ```
     {
