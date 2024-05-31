@@ -11,8 +11,7 @@
     "preembed-documents": "npm run check-env && cd server && npm install",
     "embed-documents": "cd server && npm run embed-documents",
     
-    "prestart": "npm run check-env && concurrently \"npm:install-dependencies\" \"npm:install-dependencies:server\" \"npm:install-dependencies:client\"",
-    "install-dependencies": "npm i",
+    "prestart": "npm run check-env && npm i && concurrently \"npm:install-dependencies:server\" \"npm:install-dependencies:client\"",
     "install-dependencies:server": "cd server && npm i",
     "install-dependencies:client": "cd client && npm i",
 
