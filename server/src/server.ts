@@ -31,7 +31,7 @@ const vectorStore = new MongoDBAtlasVectorSearch(
   {
     collection: collections.context as any,
     // The name of the Atlas Vector Search index. You must create this in the Atlas UI.
-    indexName: "default",
+    indexName: "vector_index",
     // The name of the collection field containing the raw content. Defaults to "text"
     textKey: "text",
     // The name of the collection field containing the embedded text. Defaults to "embedding"
