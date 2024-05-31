@@ -4,11 +4,12 @@
   "description": "",
   "type": "module",
   "scripts": {
+    "prestart": "npm i",
     "start": "nodemon --config nodemon.json",
     "start:tsx": "tsx src/server.ts",
-    "embed-documents": "tsx src/embed-documents.ts",
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+
+    "preembed-documents": "npm i",
+    "embed-documents": "tsx src/embed-documents.ts"
   },
   "author": "Stanimira Vlaeva <stanimira.vlaeva@mongodb.com>",
   "license": "Apache-2.0",
