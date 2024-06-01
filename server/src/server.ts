@@ -6,7 +6,7 @@ import { GoogleVertexAIEmbeddings } from "@langchain/community/embeddings/google
 import { MongoDBAtlasVectorSearch } from "@langchain/mongodb";
 
 import { config } from "./config.js";
-import { connectToDatabase } from "./database.js";
+import { connectToDatabase, collections } from "./database.js";
 
 
 const app = express();
