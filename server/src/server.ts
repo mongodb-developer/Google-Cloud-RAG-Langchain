@@ -21,6 +21,7 @@ router.get("/", async (_, res) => {
 
 router.post("/messages", async (req, res) => {
   // TODO: Implement /messages POST endpoint
+  res.status(501).end();
 });
 
 
