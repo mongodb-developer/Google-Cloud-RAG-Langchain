@@ -5,13 +5,6 @@ dotenv.config();
 
 const { ATLAS_URI } = process.env;
 
-if (!ATLAS_URI) {
-  console.error(
-    "No ATLAS_URI environment variable has been defined in .env"
-  );
-  process.exit(1);
-}
-
 export const config = {
     mongodb: {
         uri: ATLAS_URI,
