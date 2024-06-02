@@ -13,7 +13,7 @@ export const collections: {
 } = {};
 
 export async function connectToDatabase(uri = config.mongodb.uri) {
-    const client = new MongoClient(uri);
+    const client = new MongoClient(uri, { appName: 'devrel.googlecloud.rag' });
     await client.connect();
 
     const db = client.db(config.mongodb.dbName);
