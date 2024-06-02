@@ -2,21 +2,18 @@ import localtunnel from 'localtunnel';
 import { readFileSync, writeFileSync } from 'node:fs';
 
 (async () => {
- const tunnel = await localtunnel({ port: 8080 });
+  const tunnel = await localtunnel({ port: 8080 });
+  const url = tunnel.url;
+  const configFileClient = readFileSync('./client/src/config.ts');
+  const configFileClientString = configFileClient.toString();
 
- const url = tunnel.url;
+  const updatedFile = configFileClientString.replace(/(backendUrl = )(.*?)\;/g, `$1'${url}';`);
 
- const configFileClient = readFileSync('./client/src/config.ts');
+  writeFileSync('./client/src/config.ts', updatedFile);
 
- const configFileClientString = configFileClient.toString();
+  console.log('API Tunnel open!');
 
- const updatedFile = configFileClientString.replace('https://mongodb.loca.lt', url);
-
- writeFileSync('./client/src/config.ts', updatedFile);
-
- console.log('API Tunnel open!');
-
- tunnel.on('close', () => {
-		 // tunnels are closed
-		 });
- })();
+  tunnel.on('close', () => {
+    // tunnels are closed
+  });
+})();
