@@ -78,7 +78,10 @@ export class ChatComponent implements OnInit {
       this.httpClient.post(`${config.backendUrl}/messages`,
         { text, rag },
         {
-          headers: { 'bypass-tunnel-reminder': 'true' }
+          headers: {
+            'bypass-tunnel-reminder': 'true',
+            'ngrok-skip-browser-warning': 'true'
+          }
         }
       )
         .subscribe({

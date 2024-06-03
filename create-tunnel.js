@@ -1,9 +1,11 @@
-import localtunnel from 'localtunnel';
+import ngrok from '@ngrok/ngrok';
 import { readFileSync, writeFileSync } from 'node:fs';
 
 (async () => {
-  const tunnel = await localtunnel({ port: 8080 });
-  const url = tunnel.url;
+  const listener = await ngrok.connect({ addr: 8080, authtoken_from_env: true })
+  const url = listener.url();
+
+
   const configFileClient = readFileSync('./client/src/config.ts');
   const configFileClientString = configFileClient.toString();
 
@@ -11,9 +13,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 
   writeFileSync('./client/src/config.ts', updatedFile);
 
-  console.log('API Tunnel open!');
+  console.log(`API Tunnel open at ${url}`);
 
-  tunnel.on('close', () => {
-    // tunnels are closed
-  });
+  while(true){}
 })();
