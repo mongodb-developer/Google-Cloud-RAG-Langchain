@@ -8,8 +8,6 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MarkdownComponent, MarkdownPipe } from 'ngx-markdown';
 
-import { config } from '../../config';
-
 interface Message {
   text: string;
   type: 'human' | 'bot' | 'loading';
@@ -75,7 +73,7 @@ export class ChatComponent implements OnInit {
         type: 'loading',
       });
 
-      this.httpClient.post(`${config.backendUrl}/messages`,
+      this.httpClient.post(`/api/messages`,
         { text, rag },
         {
           headers: {
