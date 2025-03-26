@@ -2,12 +2,11 @@ import express from "express";
 import cors from "cors";
 import { ChatVertexAI } from "@langchain/google-vertexai";
 import { BaseLanguageModelInput } from "@langchain/core/language_models/base";
-import { GoogleVertexAIEmbeddings } from "@langchain/community/embeddings/googlevertexai";
+import { VertexAIEmbeddings } from "@langchain/google-vertexai";
 import { MongoDBAtlasVectorSearch } from "@langchain/mongodb";
 
 import { config } from "./config.js";
 import { connectToDatabase, collections } from "./database.js";
-
 
 const app = express();
 app.use(cors());
