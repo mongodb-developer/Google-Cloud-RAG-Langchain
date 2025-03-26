@@ -1,8 +1,8 @@
 import { MongoDBAtlasVectorSearch } from "@langchain/mongodb";
 import { DirectoryLoader } from "langchain/document_loaders/fs/directory";
-import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { GoogleVertexAIEmbeddings } from "@langchain/community/embeddings/googlevertexai";
+import { VertexAIEmbeddings } from "@langchain/google-vertexai";
 
 import { connectToDatabase } from "./database.js";
 
@@ -33,7 +33,9 @@ const collections = await connectToDatabase();
 // Instantiates a new MongoDBAtlasVectorSearch object with the specified configuration
 const vectorStore = new MongoDBAtlasVectorSearch(
   // Google Cloud Vertex AI's text embeddings model will be used for vectorizing the text chunks
-  new GoogleVertexAIEmbeddings(),
+  new VertexAIEmbeddings({
+    model: "text-embedding-005"
+  }),
   {
     collection: collections.context as any,
     // The name of the Atlas Vector Search index. You must create this in the Atlas UI.

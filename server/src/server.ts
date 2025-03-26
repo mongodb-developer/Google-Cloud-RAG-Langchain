@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import { ChatVertexAI } from "@langchain/google-vertexai";
 import { BaseLanguageModelInput } from "@langchain/core/language_models/base";
-import { GoogleVertexAIEmbeddings } from "@langchain/community/embeddings/googlevertexai";
+import { VertexAIEmbeddings } from "@langchain/google-vertexai";
 import { MongoDBAtlasVectorSearch } from "@langchain/mongodb";
 
 import { config } from "./config.js";
@@ -27,7 +27,9 @@ const model = new ChatVertexAI({
 // Connect to the MongoDB Atlas vector store
 const vectorStore = new MongoDBAtlasVectorSearch(
   // Google Cloud Vertex AI's text embeddings model will be used for vectorizing the text chunks
-  new GoogleVertexAIEmbeddings(),
+  new VertexAIEmbeddings({
+    model: "text-embedding-005"
+  }),
   {
     collection: collections.context as any,
     // The name of the Atlas Vector Search index. You must create this in the Atlas UI.
@@ -84,6 +86,8 @@ router.post("/messages", async (req, res) => {
     } else {
       console.error("Retrieval of context failed");
     }
+
+    console.log(context);
   }
 
   try {
